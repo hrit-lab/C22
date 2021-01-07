@@ -2,25 +2,29 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 var engine,world;
-var obj;
+var ground,ball;  
 function setup() {
   var canvas = createCanvas(500,500);
   engine = Engine.create();
   world = engine.world;
-  var obj_options ={
+  var ground_options ={
     isStatic : true
   }
-  obj = Bodies.rectangle(400,400,90,21,obj_options);
-  World.add(world,obj);
-  console.log(obj);
-  console.log(obj.position.x);
-  console.log(obj.position.y);
+  ground = Bodies.rectangle(200,400,150,40,ground_options);
+  World.add(world,ground);
+  var ball_options ={
+    restitution: 1.0
+  }
+  ball = Bodies.circle(200,200,20,ball_options);
+  World.add(world,ball);
 }
 
 function draw() {
   background(0);
   fill("cyan");
+  Engine.update(engine);
   rectMode(CENTER);
-  rect(obj.position.x,obj.position.y,90,25);  
-  
+  rect(ground.position.x,ground.position.y,150,40);  
+  ellipseMode(RADIUS);
+  ellipse(ball.position.x,ball.position.y,20);
 }
